@@ -2,58 +2,48 @@ import http from "k6/http";
 import { check } from "k6";
 import { config } from "../config.js";
 import { bearerHeaders } from "./auth.js";
-import { rpcErrors } from "./metrics.js";
+import { leaderboardErrors, rpcErrors } from "./metrics.js";
+import { extractRpcError, unwrapRpcPayload } from "./rpcParse.js";
 
-function unwrapRpcPayload(responseBody) {
-  let value = responseBody;
-  if (typeof value === "string") {
-    try {
-      value = JSON.parse(value);
-    } catch (_e) {
-      return value;
-    }
-  }
+const BLOCKED_LEADERBOARD_RPCS = {
+  rpc_dance_submitSessionResults: true,
+};
 
-  if (value && typeof value === "object") {
-    if ("error" in value && value.error != null) {
-      const err = value.error;
-      const message =
-        typeof err.message === "string" ? err.message : JSON.stringify(err);
-      const code = err.code != null ? Number(err.code) : 0;
-      throw new Error(`RPC error (${code}): ${message}`);
-    }
-
-    if ("payload" in value) {
-      return unwrapRpcPayload(value.payload);
-    }
-
-    if ("result" in value) {
-      return unwrapRpcPayload(value.result);
-    }
-  }
-
-  if (typeof value === "string") {
-    const trimmed = value.trim();
-    if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
-      try {
-        return JSON.parse(trimmed);
-      } catch (_e) {
-        return value;
-      }
-    }
-  }
-
-  return value;
+function isBlockedLeaderboardRpc(rpcName) {
+  const name = String(rpcName || "");
+  return !!BLOCKED_LEADERBOARD_RPCS[name] || /leaderboard/i.test(name);
 }
 
 /**
  * TV-style RPC call: JSON-string body first, plain object fallback.
  * Matches just_for_hesam callTvRpc behavior.
+ *
+ * Leaderboard RPCs are blocked in this load-test phase.
  */
 export function callRpc(token, rpcName, payload, tags) {
+  if (isBlockedLeaderboardRpc(rpcName)) {
+    leaderboardErrors.add(1);
+    console.error(
+      `BUG: k6 load test must not call leaderboard RPC: ${rpcName}`,
+    );
+    return {
+      ok: false,
+      status: 0,
+      parsed: null,
+      error: `blocked leaderboard RPC: ${rpcName}`,
+      errorCode: null,
+      body: "",
+      timings: null,
+      rpcName,
+      payload: payload || {},
+    };
+  }
+
   const urlBase = `${config.httpBase}/v2/rpc/${rpcName}`;
-  const query = config.httpKey ? `?http_key=${encodeURIComponent(config.httpKey)}&unwrap` : "?unwrap";
-  const url = urlBase + query;
+  // Production TV/mobile RPCs use Bearer only (just_for_hesam callTvRpc).
+  // Do not send http_key here: that is server-to-server auth and can leave
+  // ctx.userId empty, which makes nk.linkDevice fail with 4008.
+  const url = `${urlBase}?unwrap=true`;
   const headers = bearerHeaders(token);
   const bodyObject = payload || {};
 
@@ -72,26 +62,52 @@ export function callRpc(token, rpcName, payload, tags) {
     });
   }
 
-  const ok = res.status === 200;
+  const bizError = extractRpcError(res.body);
+  const httpOk = res.status === 200;
   let parsed = null;
   let error = null;
+  let errorCode = null;
 
-  if (ok) {
+  if (httpOk && !bizError) {
     try {
       parsed = unwrapRpcPayload(JSON.parse(res.body));
+      if (parsed && typeof parsed === "object" && parsed.error) {
+        const nested = extractRpcError(parsed);
+        if (nested) {
+          error = nested.message;
+          errorCode = nested.code;
+          parsed = null;
+        }
+      }
     } catch (e) {
       error = e.message || String(e);
     }
+  } else if (bizError) {
+    error = bizError.message;
+    errorCode = bizError.code;
   } else {
-    error = `HTTP ${res.status}: ${(res.body || "").slice(0, 200)}`;
+    error = `HTTP ${res.status}: ${(res.body || "").slice(0, 500)}`;
+  }
+
+  const ok = httpOk && !error;
+  if (ok && parsed == null) {
+    parsed = {};
+  }
+  if (!ok) {
     rpcErrors.add(1);
   }
 
-  if (ok && error) {
-    rpcErrors.add(1);
-  }
-
-  return { ok, status: res.status, parsed, error, body: res.body, timings: res.timings };
+  return {
+    ok,
+    status: res.status,
+    parsed,
+    error,
+    errorCode,
+    body: res.body,
+    timings: res.timings,
+    rpcName,
+    payload: bodyObject,
+  };
 }
 
 export function callRpcChecked(token, rpcName, payload, checkName, tags) {

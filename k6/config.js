@@ -2,13 +2,16 @@
  * Nakama dance game load test configuration.
  *
  * Load model (1:1 TV-to-mobile):
- *   One "user" = 1 mobile player paired with 1 TV.
- *   One k6 VU     = 1 TV + 1 mobile (one complete game session).
+ *   One k6 VU = 1 TV + 1 mobile (one complete game session).
  *
- * Profile sizing:
- *   10-user smoke  → 5 VUs  (5 TV + 5 mobile)
- *   50-user load   → 25 VUs (25 TV + 25 mobile)
- *   100-user stress → 50 VUs (50 TV + 50 mobile)
+ * Load classes (configured VU count, not server health):
+ *   10 VU  → LIGHT   (10 TV + 10 mobile = 20 clients)
+ *   25 VU  → MEDIUM  (25 TV + 25 mobile = 50 clients)
+ *   50 VU  → HEAVY   (50 TV + 50 mobile = 100 clients)
+ *
+ * Current phase: execute LIGHT (10 VU) only.
+ * MEDIUM and HEAVY are defined for later runs and must not start
+ * unless ALLOW_HIGHER_LOAD=1 is set explicitly.
  */
 
 function envInt(name, fallback) {
@@ -63,8 +66,33 @@ function resolvePairCounts() {
     return { tvSessions: mobile, mobilePlayers: mobile };
   }
 
-  const fallback = legacyRaw ? parseInt(legacyRaw, 10) : 25;
+  const fallback = legacyRaw ? parseInt(legacyRaw, 10) : 10;
   return { tvSessions: fallback, mobilePlayers: fallback };
+}
+
+/** Configured load classes. Do not infer server health from these labels. */
+export const LOAD_LEVEL_TABLE = [
+  { vus: 10, loadClass: "LIGHT", tvSessions: 10, mobilePlayers: 10, totalClients: 20 },
+  { vus: 25, loadClass: "MEDIUM", tvSessions: 25, mobilePlayers: 25, totalClients: 50 },
+  { vus: 50, loadClass: "HEAVY", tvSessions: 50, mobilePlayers: 50, totalClients: 100 },
+];
+
+export function classifyLoad(vuCount, tvSessions, mobilePlayers) {
+  const vus = Number(vuCount);
+  const known = LOAD_LEVEL_TABLE.find((row) => row.vus === vus);
+  if (known) {
+    return Object.assign({}, known);
+  }
+  const tv = Number(tvSessions);
+  const mobile = Number(mobilePlayers);
+  return {
+    vus: vus,
+    loadClass: "UNCLASSIFIED",
+    tvSessions: Number.isFinite(tv) ? tv : vus,
+    mobilePlayers: Number.isFinite(mobile) ? mobile : vus,
+    totalClients:
+      (Number.isFinite(tv) ? tv : 0) + (Number.isFinite(mobile) ? mobile : 0),
+  };
 }
 
 const pairCounts = resolvePairCounts();
@@ -73,12 +101,11 @@ const httpScheme = useTls ? "https" : "http";
 const wsScheme = useTls ? "wss" : "ws";
 
 /** Device auth uses Nakama socket.server_key (NOT runtime http_key). */
-const serverKey =
-  __ENV.NAKAMA_SERVER_KEY || __ENV.NAKAMA_HTTP_KEY || "";
+const serverKey = __ENV.NAKAMA_SERVER_KEY || "";
 
 if (!serverKey) {
   throw new Error(
-    "Missing NAKAMA_SERVER_KEY (or NAKAMA_HTTP_KEY fallback) for device authentication",
+    "Missing NAKAMA_SERVER_KEY for device authentication (do not use NAKAMA_HTTP_KEY)",
   );
 }
 
@@ -96,6 +123,11 @@ export const config = {
   /** Mobile player count (= TV count = k6 VUs for gameplay scenarios) */
   mobilePlayers: pairCounts.mobilePlayers,
   tvSessions: pairCounts.tvSessions,
+  loadLevel: classifyLoad(
+    pairCounts.tvSessions,
+    pairCounts.tvSessions,
+    pairCounts.mobilePlayers,
+  ),
 
   videoId: envInt("VIDEO_ID", 0),
   countdownMs: envInt("COUNTDOWN_MS", 10000),
@@ -126,6 +158,7 @@ export const config = {
 
   enableMobileWs: envBool("ENABLE_MOBILE_WS", false),
   skipCleanup: envBool("SKIP_CLEANUP", false),
+  allowHigherLoad: envBool("ALLOW_HIGHER_LOAD", false),
 };
 
 export function targetVusForScenario() {
@@ -147,6 +180,14 @@ export function validateConfig() {
   if (config.mobilePlayers !== config.tvSessions) {
     throw new Error(
       `MOBILE_PLAYERS (${config.mobilePlayers}) must equal TV_SESSIONS (${config.tvSessions}) — 1:1 model`,
+    );
+  }
+  const vus = config.tvSessions;
+  if (vus > 10 && !config.allowHigherLoad) {
+    throw new Error(
+      "This phase only executes LIGHT (10 VU) or smaller smoke. " +
+        "25 VU MEDIUM and 50 VU HEAVY are configured but not run. " +
+        "Set ALLOW_HIGHER_LOAD=1 only when that load is explicitly requested.",
     );
   }
 }

@@ -23,15 +23,22 @@ export function randomAlphaNum(length) {
 export function createSessionContext(vu, iter) {
   const sessionKey = `${vu}-${iter}-${Date.now()}-${randomAlphaNum(8)}`;
   const linkTimestamp = Date.now();
-  const linkBody = `k6${sessionKey.replace(/-/g, "")}`;
 
   return {
     sessionKey,
-    /** Used only for authenticate/device — never for pairing RPC */
-    tvAuthDeviceId: `tv-k6-${sessionKey}`,
-    /** Used for rpc_multiSession_generateLinkLoginCode / QR pairing */
-    tvLinkDeviceId: `tv-${linkBody}-${linkTimestamp}`,
-    mobileDeviceId: `mobile-k6-${sessionKey}`,
+    /**
+     * Authenticate/device only. Must NOT match LINK_DEVICE_ID_PATTERN
+     * (/^tv-[a-z0-9]+-\d+$/i) and must never be sent as the pairing deviceId.
+     * Production TV uses the shared guest id "tv-guest-link-notify" here;
+     * each k6 VU needs a unique guest-style id so accounts do not collide.
+     */
+    tvAuthDeviceId: `k6-tv-auth-${sessionKey}`,
+    /**
+     * Pairing/link id — production createTvDeviceId(): tv-{random12}-{timestamp}
+     * Never used for authenticate/device before verify (server 4008).
+     */
+    tvLinkDeviceId: `tv-${randomAlphaNum(12)}-${linkTimestamp}`,
+    mobileDeviceId: `k6-mobile-${sessionKey}`,
     tvSubject: createNotificationSubject(sessionKey, "tv"),
     mobileSubject: createNotificationSubject(sessionKey, "mobile"),
   };

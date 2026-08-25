@@ -2,7 +2,6 @@ import { check } from "k6";
 import { config } from "../config.js";
 import { callRpc } from "./nakama.js";
 import {
-  finalResultDuration,
   frameSyncDuration,
   frameSyncFailure,
   frameSyncPulsesSent,
@@ -12,9 +11,6 @@ import {
   scoreRpcDuration,
   scoreSuccess,
   serverTimeDuration,
-  finalResultFailure,
-  finalResultSuccess,
-  finalResultSuccessRate,
   gameStarted,
   syncFailure,
   syncStartDuration,
@@ -26,7 +22,6 @@ import {
   buildRepresentativeFrameTimeline,
   generateFinalScore,
   generateLiveScore,
-  uniqueSessionId,
 } from "./utils.js";
 
 export function registerFrameTimeline(mobileToken, videoId) {
@@ -169,66 +164,42 @@ export function sendDanceFinished(mobileToken, mobileSubject, videoId, playerCou
   );
 }
 
-export function submitSessionResults(mobileToken, sessionId, songId, bestScore, players) {
-  const start = Date.now();
-  const result = callRpc(
-    mobileToken,
-    "rpc_dance_submitSessionResults",
-    {
-      sessionId: sessionId,
-      bestScore: bestScore,
-      songId: String(songId),
-      players: players || [],
-    },
-    { phase: "final_result" },
-  );
-  finalResultDuration.add(Date.now() - start);
-
-  const ok = check(result, {
-    "final result ok": (r) => r.ok,
-    "final result success": (r) => {
-      if (!r.parsed) return r.ok;
-      if (r.parsed.success === true) return true;
-      if (r.parsed.result && r.parsed.result.success === true) return true;
-      return r.ok;
-    },
-  });
-
-  if (ok) {
-    finalResultSuccess.add(1);
-    finalResultSuccessRate.add(true);
-  } else {
-    finalResultFailure.add(1);
-    finalResultSuccessRate.add(false);
-  }
-
-  return { ok, parsed: result.parsed, error: result.error };
-}
-
-export function buildFinalResults(mobilePlayers, videoId, playerCount, slotScores) {
+/**
+ * End-of-gameplay notification only (code 13).
+ * Does not call rpc_dance_submitSessionResults and does not write leaderboards.
+ */
+export function sendGameplayFinished(mobilePlayers, videoId, playerCount, slotScores) {
   const results = [];
   for (let i = 0; i < mobilePlayers.length; i++) {
     const mobile = mobilePlayers[i];
     const slot = i + 1;
     const finalScore =
       slotScores[i] > 0 ? slotScores[i] : generateFinalScore();
-    const sessionId = uniqueSessionId("k6-dance", __VU, __ITER);
 
-    sendDanceFinished(mobile.token, mobile.subject, videoId, playerCount, slotScores.length ? slotScores : [finalScore]);
-
-    const submit = submitSessionResults(
+    const finished = sendDanceFinished(
       mobile.token,
-      sessionId,
-      String(videoId),
-      finalScore,
-      [{ playerSlot: slot, score: finalScore }],
+      mobile.subject,
+      videoId,
+      playerCount,
+      slotScores.length ? slotScores : [finalScore],
     );
+    if (!finished.ok) {
+      console.error(
+        [
+          "FAILED: OnDanceVideoFinished (code 13)",
+          finished.status != null ? `HTTP ${finished.status}` : "",
+          finished.errorCode != null ? `code: ${finished.errorCode}` : "",
+          finished.error ? `message: ${finished.error}` : "",
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      );
+    }
 
     results.push({
       slot,
       finalScore,
-      sessionId,
-      submitOk: submit.ok,
+      videoFinishedOk: finished.ok,
     });
   }
   return results;
