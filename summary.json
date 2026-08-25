@@ -1,0 +1,79 @@
+{
+  "generatedAt": "2026-08-25T08:06:27.278Z",
+  "scenario": "gameplay",
+  "players": 1,
+  "tvSessions": 5,
+  "playersPerSession": 2,
+  "scoreIntervalMs": 1000,
+  "frameSyncIntervalMs": 250,
+  "metrics": {
+    "authSuccess": 23,
+    "authFailure": 0,
+    "websocketSuccess": 0,
+    "pairingSuccess": 14,
+    "gameCompleted": 0,
+    "gameFailed": 7,
+    "scoreMessagesSent": 0,
+    "frameSyncPulsesSent": 0,
+    "notificationsReceived": 0,
+    "pairingSuccessRate": 0.6666666666666666,
+    "gameCompletionRate": 0,
+    "websocketSuccessRate": 0
+  },
+  "latency": {
+    "auth": {
+      "med": 276,
+      "max": 1821,
+      "p(90)": 1103,
+      "p(95)": 1500.2999999999993,
+      "p(99)": 1759.6200000000003,
+      "avg": 564.695652173913,
+      "min": 260
+    },
+    "pairing": {
+      "p(90)": 864.2,
+      "p(95)": 886.0999999999999,
+      "p(99)": 903.62,
+      "avg": 432.7142857142857,
+      "min": 253,
+      "med": 261,
+      "max": 908
+    },
+    "score": {
+      "max": 0,
+      "p(90)": 0,
+      "p(95)": 0,
+      "p(99)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0
+    },
+    "frameSync": {
+      "p(90)": 0,
+      "p(95)": 0,
+      "p(99)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0,
+      "max": 0
+    },
+    "finalResult": {
+      "p(95)": 0,
+      "p(99)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0,
+      "max": 0,
+      "p(90)": 0
+    }
+  },
+  "http": {
+    "med": 265.84810000000004,
+    "max": 1574.1821,
+    "p(90)": 855.6660999999999,
+    "p(95)": 988.008825,
+    "p(99)": 1324.8341299999984,
+    "avg": 407.03449130434785,
+    "min": 249.5323
+  }
+}

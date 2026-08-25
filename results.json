@@ -1,0 +1,556 @@
+{
+  "metrics": {
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1573.956,
+        "p(90)": 855.5216499999999,
+        "p(95)": 987.777675,
+        "p(99)": 1324.4791949999983,
+        "avg": 406.8315434782609,
+        "min": 249.5323,
+        "med": 265.84810000000004
+      }
+    },
+    "frame_sync_duration": {
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "auth_success": {
+      "thresholds": {
+        "count>=0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 23,
+        "rate": 1.3363996616840341
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 7,
+        "rate": 0.40673033181687995
+      }
+    },
+    "game_completion_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": false
+        }
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 0.5124,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0.4321199999999995,
+        "avg": 0.0184,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "pairing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 261,
+        "max": 908,
+        "p(90)": 864.2,
+        "p(95)": 886.0999999999999,
+        "p(99)": 903.62,
+        "avg": 432.7142857142857,
+        "min": 253
+      },
+      "thresholds": {
+        "p(95)<8000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed": {
+      "contains": "default",
+      "values": {
+        "passes": 0,
+        "fails": 46,
+        "rate": 0
+      },
+      "thresholds": {
+        "rate<0.05": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "game_failed": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 7,
+        "rate": 0.40673033181687995
+      }
+    },
+    "http_reqs": {
+      "values": {
+        "count": 46,
+        "rate": 2.6727993233680682
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "active_tv_sessions": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "min": -1,
+        "max": 1,
+        "value": -1
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 19960,
+        "rate": 1159.7624890092748
+      }
+    },
+    "pairing_failure": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.40673033181687995,
+        "count": 7
+      }
+    },
+    "sync_start_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "final_result_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 5,
+        "min": 5,
+        "max": 5
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 0,
+        "min": 0,
+        "max": 5
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 265.84810000000004,
+        "max": 1574.1821,
+        "p(90)": 855.6660999999999,
+        "p(95)": 988.008825,
+        "p(99)": 1324.8341299999984,
+        "avg": 407.03449130434785,
+        "min": 249.5323
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.9204545454545454,
+        "passes": 81,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": false
+        }
+      }
+    },
+    "http_req_connecting": {
+      "values": {
+        "avg": 60.575921739130436,
+        "min": 0,
+        "med": 0,
+        "max": 1265.3973,
+        "p(90)": 248.47665,
+        "p(95)": 258.6307,
+        "p(99)": 813.8239199999972
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.18454782608695658,
+        "min": 0,
+        "med": 0.08485,
+        "max": 0.9221,
+        "p(90)": 0.5991,
+        "p(95)": 0.817075,
+        "p(99)": 0.921245
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 7432.4906,
+        "p(90)": 6839.99084,
+        "p(95)": 7136.24072,
+        "p(99)": 7373.240624,
+        "avg": 5504.1124285714295,
+        "min": 3249.8035,
+        "med": 6032.4512
+      }
+    },
+    "active_players": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": -2,
+        "min": -2,
+        "max": 2
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "rate": 1470.5044625173712,
+        "count": 25308
+      }
+    },
+    "active_games": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": -1,
+        "min": -1,
+        "max": 1
+      }
+    },
+    "pairing_success": {
+      "contains": "default",
+      "values": {
+        "count": 14,
+        "rate": 0.8134606636337599
+      },
+      "type": "counter"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 60.58318260869565,
+        "min": 0,
+        "med": 0,
+        "max": 1265.3973,
+        "p(90)": 248.47665,
+        "p(95)": 258.7142,
+        "p(99)": 813.8239199999972
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 407.03449130434785,
+        "min": 249.5323,
+        "med": 265.84810000000004,
+        "max": 1574.1821,
+        "p(90)": 855.6660999999999,
+        "p(95)": 988.008825,
+        "p(99)": 1324.8341299999984
+      }
+    },
+    "pairing_success_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 7,
+        "rate": 0.6666666666666666,
+        "passes": 14
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": false
+        }
+      }
+    },
+    "score_rpc_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "avg": 0
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "auth_duration": {
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 276,
+        "max": 1821,
+        "p(90)": 1103,
+        "p(95)": 1500.2999999999993,
+        "p(99)": 1759.6200000000003,
+        "avg": 564.695652173913,
+        "min": 260
+      }
+    },
+    "websocket_success_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      }
+    }
+  },
+  "setup_data": {
+    "scenario": "gameplay",
+    "startedAt": "2026-08-25T08:06:12.211Z",
+    "tvSessions": 5,
+    "port": "7350",
+    "targetVus": 5,
+    "totalPlayers": 1,
+    "host": "85.198.11.216",
+    "monitorBefore": {
+      "monitor": {
+        "currentTimestamp": 0,
+        "averageRtt": 0,
+        "clockOffset": 0,
+        "currentSession": "",
+        "currentJsonFrame": 0,
+        "lastBroadcastAt": 0,
+        "playerCount": 1,
+        "referenceTime": 0,
+        "timelineVersion": 0,
+        "packetLoss": 0,
+        "broadcastRate": 0,
+        "broadcastsSent": 0,
+        "connectedTvClients": 0,
+        "connectedUnityClients": 0,
+        "currentSequence": 0,
+        "pulsesReceived": 0
+      }
+    },
+    "playersPerSession": 2
+  },
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "name": "setup",
+        "path": "::setup",
+        "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "auth status 200",
+              "path": "::setup::auth status 200",
+              "id": "72c84d82d612c95704d8e84cb4e3d040",
+              "passes": 1,
+              "fails": 0
+            },
+            {
+              "name": "auth has token",
+              "path": "::setup::auth has token",
+              "id": "6aaf2989812530739c68bc31db639146",
+              "passes": 1,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "teardown",
+        "path": "::teardown",
+        "id": "a8a9942382e8ffe2e56ef29e664b8229",
+        "groups": [],
+        "checks": [
+            {
+              "name": "auth status 200",
+              "path": "::teardown::auth status 200",
+              "id": "7157c321dd84e6750170adbb6d00a3b6",
+              "passes": 1,
+              "fails": 0
+            },
+            {
+              "name": "auth has token",
+              "path": "::teardown::auth has token",
+              "id": "48082ec82bed51eace5ec0fefa484db3",
+              "passes": 1,
+              "fails": 0
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "id": "044cbba30fdd41d762abaae52362312b",
+        "passes": 21,
+        "fails": 0,
+        "name": "auth status 200",
+        "path": "::auth status 200"
+      },
+      {
+        "name": "auth has token",
+        "path": "::auth has token",
+        "id": "84540fcbf5ca56a277981fc49e01ed6f",
+        "passes": 21,
+        "fails": 0
+      },
+      {
+        "id": "c6ab42acb82ceac2949fb93fe4c64ffa",
+        "passes": 7,
+        "fails": 0,
+        "name": "pairing generate code ok",
+        "path": "::pairing generate code ok"
+      },
+      {
+        "fails": 0,
+        "name": "pairing loginCode present",
+        "path": "::pairing loginCode present",
+        "id": "f0e0224c08c595919c018d9a6517961e",
+        "passes": 7
+      },
+      {
+        "passes": 14,
+        "fails": 0,
+        "name": "pairing verify ok",
+        "path": "::pairing verify ok",
+        "id": "3cb18a7b870d77bc55d7e6d4cf74005a"
+      },
+      {
+        "id": "467167bfaeae446a2f74e7d2887c97cc",
+        "passes": 7,
+        "fails": 7,
+        "name": "pairing verify success",
+        "path": "::pairing verify success"
+      }
+    ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)",
+      "p(99)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": true
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 17210.4204
+  }
+}

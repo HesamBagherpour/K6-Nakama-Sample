@@ -1,0 +1,817 @@
+{
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)",
+      "p(99)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": true
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 29451.4412
+  },
+  "metrics": {
+    "auth_duration": {
+      "contains": "time",
+      "values": {
+        "med": 544.5,
+        "max": 550,
+        "p(90)": 548.5,
+        "p(95)": 549.25,
+        "p(99)": 549.85,
+        "avg": 480,
+        "min": 281
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "final_result_success": {
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "sync_success": {
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      },
+      "type": "counter"
+    },
+    "ws_sessions": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      }
+    },
+    "final_result_success_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 1,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      }
+    },
+    "score_rpc_duration": {
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 271.8,
+        "min": 266,
+        "med": 268,
+        "max": 295,
+        "p(90)": 285.1,
+        "p(95)": 290.05,
+        "p(99)": 294.01
+      }
+    },
+    "frame_sync_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 268.25,
+        "min": 264,
+        "med": 267.5,
+        "max": 289,
+        "p(90)": 270.9,
+        "p(95)": 272.45,
+        "p(99)": 284.04
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "game_started": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      }
+    },
+    "http_reqs": {
+      "contains": "default",
+      "values": {
+        "count": 61,
+        "rate": 2.071205941527914
+      },
+      "type": "counter"
+    },
+    "score_messages_sent": {
+      "values": {
+        "count": 10,
+        "rate": 0.33954195762752687
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "final_result_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 275,
+        "p(95)": 275,
+        "p(99)": 275,
+        "avg": 275,
+        "min": 275,
+        "med": 275,
+        "max": 275
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "pairing_success_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 2,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      }
+    },
+    "score_success": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 10,
+        "rate": 0.33954195762752687
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 27822.6925,
+        "max": 27822.6925,
+        "p(90)": 27822.6925,
+        "p(95)": 27822.6925,
+        "p(99)": 27822.6925,
+        "avg": 27822.6925,
+        "min": 27822.6925
+      }
+    },
+    "frame_sync_pulses_sent": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 32,
+        "rate": 1.086534264408086
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 0,
+        "min": 0,
+        "max": 1
+      }
+    },
+    "rpc_errors": {
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "active_games": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "max": 1,
+        "value": -1,
+        "min": -1
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 35802,
+        "rate": 1215.6281166980718
+      }
+    },
+    "pairing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 274,
+        "max": 274,
+        "p(90)": 274,
+        "p(95)": 274,
+        "p(99)": 274,
+        "avg": 274,
+        "min": 274
+      },
+      "thresholds": {
+        "p(95)<8000": {
+          "ok": true
+        }
+      }
+    },
+    "video_selection_duration": {
+      "values": {
+        "min": 265,
+        "med": 265,
+        "max": 265,
+        "p(90)": 265,
+        "p(95)": 265,
+        "p(99)": 265,
+        "avg": 265
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_duration{expected_response:true}": {
+      "contains": "time",
+      "values": {
+        "avg": 282.9957770491804,
+        "min": 261.7854,
+        "med": 267.4559,
+        "max": 752.3724,
+        "p(90)": 282.6413,
+        "p(95)": 291.9414,
+        "p(99)": 653.2237799999997
+      },
+      "type": "trend"
+    },
+    "pairing_success": {
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.06790839152550537
+      },
+      "type": "counter"
+    },
+    "game_completed": {
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      },
+      "type": "counter"
+    },
+    "ws_msgs_received": {
+      "contains": "default",
+      "values": {
+        "rate": 0.3734961533902796,
+        "count": 11
+      },
+      "type": "counter"
+    },
+    "ws_ping": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 802.5608,
+        "p(90)": 801.92856,
+        "p(95)": 802.24468,
+        "p(99)": 802.497576,
+        "avg": 621.5574666666666,
+        "min": 262.712,
+        "med": 799.3996
+      }
+    },
+    "websocket_disconnects": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      }
+    },
+    "websocket_success_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 1,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "contains": "time",
+      "values": {
+        "max": 0.9656,
+        "p(90)": 0.6653,
+        "p(95)": 0.8312,
+        "p(99)": 0.9338599999999999,
+        "avg": 0.20236393442622955,
+        "min": 0,
+        "med": 0
+      },
+      "type": "trend"
+    },
+    "active_tv_sessions": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "min": -1,
+        "max": 1,
+        "value": -1
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 261.7854,
+        "med": 267.4559,
+        "max": 752.3724,
+        "p(90)": 282.6413,
+        "p(95)": 291.9414,
+        "p(99)": 653.2237799999997,
+        "avg": 282.9957770491804
+      }
+    },
+    "score_notifications_received": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.33954195762752687,
+        "count": 10
+      }
+    },
+    "ws_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 525.4719,
+        "min": 525.4719,
+        "med": 525.4719,
+        "max": 525.4719,
+        "p(90)": 525.4719,
+        "p(95)": 525.4719,
+        "p(99)": 525.4719
+      }
+    },
+    "game_completion_rate": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 1,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 261.88788,
+        "avg": 12.818029508196721,
+        "min": 0,
+        "med": 0,
+        "max": 262.8012,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "sync_start_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 273,
+        "min": 273,
+        "med": 273,
+        "max": 273,
+        "p(90)": 273,
+        "p(95)": 273,
+        "p(99)": 273
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "active_players": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": -1,
+        "min": -1,
+        "max": 1
+      }
+    },
+    "websocket_messages_received": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.3734961533902796,
+        "count": 11
+      }
+    },
+    "ws_session_duration": {
+      "values": {
+        "med": 19425.7403,
+        "max": 19425.7403,
+        "p(90)": 19425.7403,
+        "p(95)": 19425.7403,
+        "p(99)": 19425.7403,
+        "avg": 19425.7403,
+        "min": 19425.7403
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0.0786,
+        "p(99)": 0.795259999999999,
+        "avg": 0.03410163934426229,
+        "min": 0,
+        "med": 0,
+        "max": 1.2305,
+        "p(90)": 0
+      }
+    },
+    "checks": {
+      "values": {
+        "rate": 1,
+        "passes": 20,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_waiting": {
+      "values": {
+        "min": 261.7854,
+        "med": 267.3065,
+        "max": 752.3724,
+        "p(90)": 281.5736,
+        "p(95)": 291.7907,
+        "p(99)": 653.0943599999997,
+        "avg": 282.75931147540985
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_connecting": {
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 262.7912,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 261.72427999999996,
+        "avg": 12.813504918032786
+      },
+      "type": "trend"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 35468,
+        "rate": 1204.2874153133123
+      }
+    },
+    "http_req_failed": {
+      "thresholds": {
+        "rate<0.05": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 0,
+        "fails": 61,
+        "rate": 0
+      }
+    },
+    "sync_success_rate": {
+      "values": {
+        "rate": 1,
+        "passes": 1,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.95": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "websocket_connect_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 525,
+        "min": 525,
+        "med": 525,
+        "max": 525,
+        "p(90)": 525,
+        "p(95)": 525,
+        "p(99)": 525
+      }
+    },
+    "notifications_received": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 10,
+        "rate": 0.33954195762752687
+      }
+    },
+    "websocket_success": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      }
+    },
+    "frame_sync_success": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 32,
+        "rate": 1.086534264408086
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.03395419576275269
+      }
+    },
+    "auth_success": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.13581678305101075,
+        "count": 4
+      },
+      "thresholds": {
+        "count>=0": {
+          "ok": true
+        }
+      }
+    }
+  },
+  "setup_data": {
+    "host": "85.198.11.216",
+    "loadProfile": "load",
+    "mobilePlayers": 1,
+    "monitorBefore": {
+      "monitor": {
+        "pulsesReceived": 0,
+        "playerCount": 1,
+        "averageRtt": 0,
+        "broadcastRate": 0,
+        "broadcastsSent": 0,
+        "connectedUnityClients": 0,
+        "currentSession": "",
+        "currentTimestamp": 0,
+        "lastBroadcastAt": 0,
+        "clockOffset": 0,
+        "connectedTvClients": 0,
+        "currentSequence": 0,
+        "referenceTime": 0,
+        "packetLoss": 0,
+        "currentJsonFrame": 0,
+        "timelineVersion": 0
+      }
+    },
+    "scenario": "smoke",
+    "startedAt": "2026-08-25T08:44:15.611Z",
+    "targetVus": 1,
+    "tvSessions": 1,
+    "port": "7350"
+  },
+  "root_group": {
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "path": "::setup",
+        "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "auth status 200",
+              "path": "::setup::auth status 200",
+              "id": "72c84d82d612c95704d8e84cb4e3d040",
+              "passes": 1,
+              "fails": 0
+            },
+            {
+              "path": "::setup::auth has token",
+              "id": "6aaf2989812530739c68bc31db639146",
+              "passes": 1,
+              "fails": 0,
+              "name": "auth has token"
+            }
+          ],
+        "name": "setup"
+      },
+      {
+        "name": "teardown",
+        "path": "::teardown",
+        "id": "a8a9942382e8ffe2e56ef29e664b8229",
+        "groups": [],
+        "checks": [
+            {
+              "name": "auth status 200",
+              "path": "::teardown::auth status 200",
+              "id": "7157c321dd84e6750170adbb6d00a3b6",
+              "passes": 1,
+              "fails": 0
+            },
+            {
+              "path": "::teardown::auth has token",
+              "id": "48082ec82bed51eace5ec0fefa484db3",
+              "passes": 1,
+              "fails": 0,
+              "name": "auth has token"
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "name": "auth status 200",
+        "path": "::auth status 200",
+        "id": "044cbba30fdd41d762abaae52362312b",
+        "passes": 2,
+        "fails": 0
+      },
+      {
+        "passes": 2,
+        "fails": 0,
+        "name": "auth has token",
+        "path": "::auth has token",
+        "id": "84540fcbf5ca56a277981fc49e01ed6f"
+      },
+      {
+        "passes": 1,
+        "fails": 0,
+        "name": "pairing generate code ok",
+        "path": "::pairing generate code ok",
+        "id": "c6ab42acb82ceac2949fb93fe4c64ffa"
+      },
+      {
+        "name": "pairing loginCode present",
+        "path": "::pairing loginCode present",
+        "id": "f0e0224c08c595919c018d9a6517961e",
+        "passes": 1,
+        "fails": 0
+      },
+      {
+        "fails": 0,
+        "name": "pairing verify ok",
+        "path": "::pairing verify ok",
+        "id": "3cb18a7b870d77bc55d7e6d4cf74005a",
+        "passes": 1
+      },
+      {
+        "name": "pairing verify success",
+        "path": "::pairing verify success",
+        "id": "467167bfaeae446a2f74e7d2887c97cc",
+        "passes": 1,
+        "fails": 0
+      },
+      {
+        "fails": 0,
+        "name": "sync start ok",
+        "path": "::sync start ok",
+        "id": "1b55118cfa61a73616a228e34d8b2ab9",
+        "passes": 1
+      },
+      {
+        "fails": 0,
+        "name": "sync startAt present",
+        "path": "::sync startAt present",
+        "id": "d79c93c8513f100d39fd821c7300876d",
+        "passes": 1
+      },
+      {
+        "passes": 1,
+        "fails": 0,
+        "name": "websocket connected 101",
+        "path": "::websocket connected 101",
+        "id": "029271dd4a6d89d480cc91092eedb242"
+      },
+      {
+        "name": "game sync start ok",
+        "path": "::game sync start ok",
+        "id": "0c966bfc5f92f9fffe7d5bc0f15b1ea1",
+        "passes": 1,
+        "fails": 0
+      },
+      {
+        "name": "game video sync notification or rpc",
+        "path": "::game video sync notification or rpc",
+        "id": "91d8dc54b0a4b3575805a7ab0a15b8cd",
+        "passes": 1,
+        "fails": 0
+      },
+      {
+        "name": "game completed gameplay window",
+        "path": "::game completed gameplay window",
+        "id": "bedc6124be1423c002443604fa4371cd",
+        "passes": 1,
+        "fails": 0
+      },
+      {
+        "name": "final result ok",
+        "path": "::final result ok",
+        "id": "f3b2fc19eefb5a6bccefd20cbf3e5150",
+        "passes": 1,
+        "fails": 0
+      },
+      {
+        "name": "final result success",
+        "path": "::final result success",
+        "id": "9fc046ea9069fde78dbe1ec377cd3f80",
+        "passes": 1,
+        "fails": 0
+      }
+    ],
+    "name": ""
+  }
+}

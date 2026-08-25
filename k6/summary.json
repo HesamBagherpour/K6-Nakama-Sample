@@ -1,0 +1,102 @@
+{
+  "generatedAt": "2026-08-25T08:44:44.253Z",
+  "loadProfile": "load",
+  "scenario": "smoke",
+  "mobilePlayers": 1,
+  "tvSessions": 1,
+  "totalSimulatedClients": 2,
+  "countdownMs": 5000,
+  "videoDurationMs": 15000,
+  "scoreIntervalMs": 1000,
+  "frameSyncIntervalMs": 250,
+  "metrics": {
+    "authSuccess": 4,
+    "authFailure": 0,
+    "websocketSuccess": 1,
+    "websocketFailure": 0,
+    "websocketDisconnects": 1,
+    "pairingSuccess": 2,
+    "pairingFailure": 0,
+    "gamesStarted": 1,
+    "gameCompleted": 1,
+    "gameFailed": 0,
+    "finalResultSuccess": 1,
+    "finalResultFailure": 0,
+    "scoreMessagesSent": 10,
+    "scoreFailures": 0,
+    "frameSyncPulsesSent": 32,
+    "frameSyncFailures": 0,
+    "notificationsReceived": 10,
+    "rpcErrors": 1,
+    "pairingSuccessRate": 1,
+    "syncSuccessRate": 1,
+    "gameCompletionRate": 1,
+    "websocketSuccessRate": 1,
+    "finalResultSuccessRate": 1
+  },
+  "latency": {
+    "auth": {
+      "p(90)": 548.5,
+      "p(95)": 549.25,
+      "p(99)": 549.85,
+      "avg": 480,
+      "min": 281,
+      "med": 544.5,
+      "max": 550
+    },
+    "pairing": {
+      "max": 274,
+      "p(90)": 274,
+      "p(95)": 274,
+      "p(99)": 274,
+      "avg": 274,
+      "min": 274,
+      "med": 274
+    },
+    "syncStart": {
+      "p(99)": 273,
+      "avg": 273,
+      "min": 273,
+      "med": 273,
+      "max": 273,
+      "p(90)": 273,
+      "p(95)": 273
+    },
+    "score": {
+      "p(95)": 290.05,
+      "p(99)": 294.01,
+      "avg": 271.8,
+      "min": 266,
+      "med": 268,
+      "max": 295,
+      "p(90)": 285.1
+    },
+    "frameSync": {
+      "avg": 268.25,
+      "min": 264,
+      "med": 267.5,
+      "max": 289,
+      "p(90)": 270.9,
+      "p(95)": 272.45,
+      "p(99)": 284.04
+    },
+    "finalResult": {
+      "avg": 275,
+      "min": 275,
+      "med": 275,
+      "max": 275,
+      "p(90)": 275,
+      "p(95)": 275,
+      "p(99)": 275
+    }
+  },
+  "http": {
+    "p(90)": 282.6413,
+    "p(95)": 291.9414,
+    "p(99)": 653.2237799999997,
+    "avg": 282.9957770491804,
+    "min": 261.7854,
+    "med": 267.4559,
+    "max": 752.3724
+  }
+}
