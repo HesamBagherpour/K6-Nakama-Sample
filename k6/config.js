@@ -34,7 +34,7 @@ function envBool(name, fallback) {
   return fallback;
 }
 
-const host = __ENV.NAKAMA_HOST || "127.0.0.1";
+const host = __ENV.NAKAMA_HOST || "85.198.11.216";
 const port = __ENV.NAKAMA_PORT || "7350";
 const useTls = envBool("NAKAMA_USE_TLS", false);
 
