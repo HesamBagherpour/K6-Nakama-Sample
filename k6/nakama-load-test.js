@@ -12,9 +12,15 @@ const vus = targetVusForScenario();
 
 function buildScenarios() {
   const vus = targetVusForScenario();
+  const vuStaggerMs = Math.max(0, (vus - 1) * 5000);
   const sessionMs =
-    config.countdownMs + config.videoDurationMs + 90000;
-  const maxDuration = `${Math.max(120, Math.ceil(sessionMs / 1000))}s`;
+    vuStaggerMs +
+    45000 +
+    config.countdownMs +
+    config.videoDurationMs +
+    config.finishGraceMs +
+    60000;
+  const maxDuration = `${Math.max(240, Math.ceil(sessionMs / 1000))}s`;
 
   return {
     main: {
@@ -301,6 +307,11 @@ export function handleSummary(data) {
       cleanupFailure: pickCounter(data, "cleanup_failure"),
       leaderboardWrites: pickCounter(data, "leaderboard_writes"),
       leaderboardErrors: pickCounter(data, "leaderboard_errors"),
+      videoFinishedNotificationsReceived: pickCounter(
+        data,
+        "video_finished_notifications_received",
+      ),
+      playbackCompletedSent: pickCounter(data, "playback_completed_sent"),
       pairingSuccessRate: pickRate(data, "pairing_success_rate"),
       syncSuccessRate: pickRate(data, "sync_success_rate"),
       gameCompletionRate: pickRate(data, "game_completion_rate"),
@@ -375,6 +386,10 @@ export function handleSummary(data) {
   lines.push(`Pairing Verify Fail:${pickCounter(data, "pairing_verify_failure")}`);
   lines.push(`Sync Start Success: ${pickCounter(data, "sync_success")}`);
   lines.push(`Gameplay Completed: ${pickCounter(data, "game_completed")}`);
+  lines.push(
+    `Results Received TV: ${pickCounter(data, "video_finished_notifications_received")}`,
+  );
+  lines.push(`Playback Completed: ${pickCounter(data, "playback_completed_sent")}`);
   lines.push(`Gameplay Cleanup OK:${pickCounter(data, "cleanup_success")}`);
   lines.push(`Gameplay Cleanup Fail:${pickCounter(data, "cleanup_failure")}`);
   lines.push(`Leaderboard Writes: ${pickCounter(data, "leaderboard_writes")}`);
@@ -385,6 +400,24 @@ export function handleSummary(data) {
   lines.push(`Frame Sync Pulses:  ${pickCounter(data, "frame_sync_pulses_sent")}`);
   lines.push(`Frame Sync Failures:${pickCounter(data, "frame_sync_failure")}`);
   lines.push(`Notifications RX:   ${pickCounter(data, "notifications_received")}`);
+  lines.push("");
+  const checksMetric = data.metrics.checks;
+  if (checksMetric && checksMetric.values) {
+    lines.push(`Checks Pass:        ${checksMetric.values.passes ?? 0}`);
+    lines.push(`Checks Fail:        ${checksMetric.values.fails ?? 0}`);
+  }
+  const iterMetric = data.metrics.iterations;
+  if (iterMetric && iterMetric.values) {
+    lines.push(`Iterations:         ${iterMetric.values.count ?? 0}`);
+  }
+  const dataRecv = data.metrics.data_received;
+  const dataSent = data.metrics.data_sent;
+  if (dataRecv && dataRecv.values) {
+    lines.push(`Data Received:      ${Math.round(dataRecv.values.count ?? 0)} bytes`);
+  }
+  if (dataSent && dataSent.values) {
+    lines.push(`Data Sent:          ${Math.round(dataSent.values.count ?? 0)} bytes`);
+  }
   lines.push("");
   lines.push("--------------------------------------------");
   lines.push("LATENCY (ms)");

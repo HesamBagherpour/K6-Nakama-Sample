@@ -151,12 +151,16 @@ export function verifyAndAcceptLinkLoginCode(mobileToken, loginCode, tvLinkDevic
   return { ok: true, parsed: result.parsed, result, payload };
 }
 
-export function sendNotification(token, subject, code, content) {
-  return callRpc(token, "rpc_multiSession_sendNotificationToSessions", {
+export function sendNotification(token, subject, code, content, deviceId) {
+  const payload = {
     subject,
     code,
     content: content || {},
-  });
+  };
+  if (deviceId != null && deviceId !== "") {
+    payload.deviceId = String(deviceId);
+  }
+  return callRpc(token, "rpc_multiSession_sendNotificationToSessions", payload);
 }
 
 export function unlinkDevice(token, deviceId) {

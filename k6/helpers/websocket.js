@@ -5,6 +5,8 @@ import {
   frameSyncNotificationsReceived,
   notificationsReceived,
   scoreNotificationsReceived,
+  sessionEndedNotificationsReceived,
+  videoFinishedNotificationsReceived,
   videoSyncStartReceived,
   websocketConnectDuration,
   websocketDisconnects,
@@ -41,6 +43,8 @@ export function connectNakamaWebSocket(params) {
     frameSyncPackets: 0,
     scorePackets: 0,
     pairingAccepted: false,
+    videoFinishedReceived: false,
+    sessionEndedReceived: false,
   };
 
   const res = ws.connect(
@@ -52,10 +56,6 @@ export function connectNakamaWebSocket(params) {
         websocketConnectDuration.add(Date.now() - start);
         websocketSuccess.add(1);
         websocketSuccessRate.add(true);
-
-        socket.setInterval(function () {
-          socket.ping();
-        }, config.wsPingIntervalMs);
 
         if (params.onOpen) {
           params.onOpen(socket, state);
@@ -101,6 +101,14 @@ export function connectNakamaWebSocket(params) {
             state.scorePackets += 1;
             scoreNotificationsReceived.add(1);
           }
+          if (code === NOTIFICATION_CODES.OnDanceVideoFinished) {
+            state.videoFinishedReceived = true;
+            videoFinishedNotificationsReceived.add(1);
+          }
+          if (code === NOTIFICATION_CODES.SessionEnded) {
+            state.sessionEndedReceived = true;
+            sessionEndedNotificationsReceived.add(1);
+          }
 
           if (params.onNotification) {
             params.onNotification(item, content, state);
@@ -119,9 +127,8 @@ export function connectNakamaWebSocket(params) {
         websocketDisconnects.add(1);
       });
 
-      socket.setTimeout(function () {
-        socket.close();
-      }, params.durationMs);
+      // Gameplay closes the socket after finish/end; avoid a short default timeout here
+      // because k6 replaces the prior socket.setTimeout when scheduling countdown/finish.
     },
   );
 

@@ -61,3 +61,10 @@ export const websocketMessagesReceived = new Counter("websocket_messages_receive
 export const videoSyncStartReceived = new Counter("video_sync_start_received");
 export const frameSyncNotificationsReceived = new Counter("frame_sync_notifications_received");
 export const scoreNotificationsReceived = new Counter("score_notifications_received");
+export const videoFinishedNotificationsReceived = new Counter(
+  "video_finished_notifications_received",
+);
+export const sessionEndedNotificationsReceived = new Counter(
+  "session_ended_notifications_received",
+);
+export const playbackCompletedSent = new Counter("playback_completed_sent");

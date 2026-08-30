@@ -132,17 +132,18 @@ export const config = {
   videoId: envInt("VIDEO_ID", 0),
   countdownMs: envInt("COUNTDOWN_MS", 10000),
   videoDurationMs: envInt("VIDEO_DURATION_MS", 60000),
+  finishGraceMs: envInt("FINISH_GRACE_MS", 15000),
 
   scoreIntervalMs: envInt("SCORE_INTERVAL_MS", 1000),
   frameSyncIntervalMs: envInt("FRAME_SYNC_INTERVAL_MS", 250),
   serverTimeIntervalMs: envInt("SERVER_TIME_INTERVAL_MS", 30000),
-  wsPingIntervalMs: envInt("WS_PING_INTERVAL_MS", 5000),
+  wsPingIntervalMs: envInt("WS_PING_INTERVAL_MS", 2000),
 
   rampUp: __ENV.RAMP_UP || "30s",
   steadyDuration: __ENV.STEADY_DURATION || "0s",
   rampDown: __ENV.RAMP_DOWN || "10s",
 
-  httpTimeout: __ENV.HTTP_TIMEOUT || "15s",
+  httpTimeout: __ENV.HTTP_TIMEOUT || "30s",
   wsTimeout: __ENV.WS_TIMEOUT || "120s",
 
   jitterAuthMaxMs: envInt("JITTER_AUTH_MAX_MS", 2000),

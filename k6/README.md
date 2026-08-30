@@ -58,8 +58,10 @@ Launchers automatically load the project `.env`. Do not set keys by hand in the 
 → TV WebSocket open
 → rpc_generateSyncStartAt + ~10s countdown
 → 60s gameplay: scores (code 8) + frame sync pulses + getServerTime
-→ gameplay finished (code 13 OnDanceVideoFinished) — no leaderboard write
-→ cleanup (SessionEnded + unlink)
+→ code 13 OnDanceVideoFinished (mobile, while TV WebSocket open)
+→ TV receives code 13 on WebSocket
+→ TV PlaybackCompleted frame-sync pulse
+→ code 17 SessionEnded + unlink — no leaderboard write
 ```
 
 ## Quick start

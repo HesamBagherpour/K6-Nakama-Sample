@@ -6,6 +6,7 @@ import {
   frameSyncFailure,
   frameSyncPulsesSent,
   frameSyncSuccess,
+  playbackCompletedSent,
   scoreFailure,
   scoreMessagesSent,
   scoreRpcDuration,
@@ -24,12 +25,25 @@ import {
   generateLiveScore,
 } from "./utils.js";
 
-export function registerFrameTimeline(mobileToken, videoId) {
-  const durationSec = Math.ceil(config.videoDurationMs / 1000);
+export function registerFrameTimeline(mobileToken, videoId, durationSecOverride) {
+  const durationSec =
+    durationSecOverride != null
+      ? durationSecOverride
+      : Math.ceil((config.videoDurationMs + config.finishGraceMs) / 1000);
   const timeline = buildRepresentativeFrameTimeline(videoId, durationSec);
-  return callRpc(mobileToken, "rpc_registerFrameTimeline", timeline, {
+  const result = callRpc(mobileToken, "rpc_registerFrameTimeline", timeline, {
     phase: "gameplay",
   });
+
+  const ok = check(result, {
+    "frame timeline registered": (r) => r.ok && r.parsed != null,
+    "frame timeline success flag": (r) => {
+      if (!r.ok || !r.parsed) return false;
+      return r.parsed.success === true;
+    },
+  });
+
+  return { ok, result };
 }
 
 export function generateSyncStart(mobileToken, videoId) {
@@ -73,20 +87,26 @@ export function generateSyncStart(mobileToken, videoId) {
   };
 }
 
-export function pulseFrameSync(token, role, playerCount, lastSequence) {
+export function pulseFrameSync(token, role, playerCount, lastSequence, extraMetadata) {
+  const payload = {
+    clientRole: role,
+    clientRttMs: 20 + Math.floor(Math.random() * 40),
+    clientOffsetMs: 0,
+    playerCount: playerCount,
+    lastReceivedSequence: lastSequence || 0,
+  };
+  if (extraMetadata != null && typeof extraMetadata === "object") {
+    for (const key in extraMetadata) {
+      if (Object.prototype.hasOwnProperty.call(extraMetadata, key)) {
+        payload[key] = extraMetadata[key];
+      }
+    }
+  }
   const start = Date.now();
-  const result = callRpc(
-    token,
-    "rpc_frameSync_pulse",
-    {
-      clientRole: role,
-      clientRttMs: 20 + Math.floor(Math.random() * 40),
-      clientOffsetMs: 0,
-      playerCount: playerCount,
-      lastReceivedSequence: lastSequence || 0,
-    },
-    { phase: "frame_sync", role: role },
-  );
+  const result = callRpc(token, "rpc_frameSync_pulse", payload, {
+    phase: "frame_sync",
+    role: role,
+  });
   frameSyncDuration.add(Date.now() - start);
   frameSyncPulsesSent.add(1);
 
@@ -110,7 +130,14 @@ export function fetchServerTime(token) {
   return result;
 }
 
-export function sendLiveScore(mobileToken, mobileSubject, playerSlot, totalScore, pointsAdded) {
+export function sendLiveScore(
+  mobileToken,
+  mobileSubject,
+  playerSlot,
+  totalScore,
+  pointsAdded,
+  tvLinkDeviceId,
+) {
   const start = Date.now();
   const result = sendNotification(
     mobileToken,
@@ -123,6 +150,7 @@ export function sendLiveScore(mobileToken, mobileSubject, playerSlot, totalScore
       rating: pointsAdded > 900 ? "perfect" : "good",
       feedback: "k6-simulated",
     },
+    tvLinkDeviceId,
   );
   scoreRpcDuration.add(Date.now() - start);
   scoreMessagesSent.add(1);
@@ -134,6 +162,16 @@ export function sendLiveScore(mobileToken, mobileSubject, playerSlot, totalScore
 
   scoreSuccess.add(1);
   return { ok: true };
+}
+
+export function sendPlaybackCompleted(tvToken, playerCount, lastSequence) {
+  const result = pulseFrameSync(tvToken, "tv", playerCount, lastSequence, {
+    playbackCompleted: true,
+  });
+  if (result.ok) {
+    playbackCompletedSent.add(1);
+  }
+  return result;
 }
 
 export function sendDanceFinished(mobileToken, mobileSubject, videoId, playerCount, scores) {
